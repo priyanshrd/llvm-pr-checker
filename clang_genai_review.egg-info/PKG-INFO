@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: clang-genai-review
+Version: 0.1
+License-File: LICENSE.TXT
+Requires-Dist: requests
+Requires-Dist: python-dotenv
+Requires-Dist: groq
+Dynamic: license-file
+Dynamic: requires-dist
