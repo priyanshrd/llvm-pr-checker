@@ -8,12 +8,19 @@ st.set_page_config(page_title="LLVM GenAI PR Reviewer", layout="wide")
 st.title("🧠 LLVM PR Review (Clang + GenAI)")
 
 pr_number = st.number_input("Enter LLVM PR Number", min_value=1, step=1)
+repo = st.text_input("GitHub Repo (e.g., llvm/llvm-project)", value="llvm/llvm-project")
+commit_sha = st.text_input("Commit SHA (from PR)", placeholder="e.g., abcdef1234567890")
+
 run = st.button("🔍 Analyze PR")
 
 REVIEW_DIR = "reviews"
 os.makedirs(REVIEW_DIR, exist_ok=True)
 
 if run:
+    if not commit_sha:
+        st.error("❌ Please provide the commit SHA.")
+        st.stop()
+
     review_file = os.path.join(REVIEW_DIR, f"llvm_pr_{pr_number}_review.md")
 
     if os.path.exists(review_file):
@@ -32,7 +39,15 @@ if run:
 
         with st.spinner("Running GenAI review..."):
             try:
-                run_review_from_patch(patch, save_markdown=True, output_path=review_file)
+                run_review_from_patch(
+                    patch_text=patch,
+                    output_dir=REVIEW_DIR,
+                    pr_number=pr_number,
+                    repo=repo,
+                    commit_sha=commit_sha,
+                    save_markdown=True,
+                    output_path=review_file
+                )
                 st.success("✅ Review completed and saved.")
             except Exception as e:
                 st.error(f"❌ Review failed: {e}")

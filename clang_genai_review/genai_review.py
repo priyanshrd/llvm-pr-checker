@@ -91,22 +91,18 @@ def run_full_review(patch_text, repo, commit_sha, save_markdown=True, output_pat
     return combined_reviews
 
 
-def run_review_from_patch(patch_text: str, output_dir: str = "clang_genai_review/reviews", pr_number: str = "manual",
-                          repo: str = "", commit_sha: str = "") -> str:
+def run_review_from_patch(patch_text: str, output_dir: str = "clang_genai_review/reviews",
+                          pr_number: str = "manual", repo: str = "", commit_sha: str = "",
+                          save_markdown: bool = True, output_path: str = None) -> str:
     """
-    Run the GenAI + static analysis review on a given patch string.
-
-    Args:
-        patch_text (str): The raw diff/patch text.
-        output_dir (str): Directory where review output will be saved.
-        pr_number (str): PR number for naming the output.
-        repo (str): GitHub repo name (e.g., "llvm/llvm-project")
-        commit_sha (str): Commit SHA to fetch actual file contents
-
-    Returns:
-        str: Path to the saved review markdown file.
+    Run full clang+AI review on patch text and save markdown file.
     """
-    os.makedirs(output_dir, exist_ok=True)
-    output_path = os.path.join(output_dir, f"pr_{pr_number}.md")
-    run_full_review(patch_text, repo, commit_sha, save_markdown=True, output_path=output_path)
+    if not repo or not commit_sha:
+        raise ValueError("❌ 'repo' and 'commit_sha' are required for running clang tools.")
+
+    if output_path is None:
+        output_path = os.path.join(output_dir, f"pr_{pr_number}.md")
+
+    review_data = run_full_review(patch_text, repo, commit_sha, save_markdown=save_markdown, output_path=output_path)
+
     return output_path
