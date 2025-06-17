@@ -1,8 +1,6 @@
-LICENSE.TXT
-README.md
-pyproject.toml
 setup.py
 clang_genai_review/__init__.py
+clang_genai_review/app.py
 clang_genai_review/cli.py
 clang_genai_review/fetch_pr_patch.py
 clang_genai_review/genai_review.py
