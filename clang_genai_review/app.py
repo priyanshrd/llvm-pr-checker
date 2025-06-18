@@ -7,7 +7,7 @@ from clang_genai_review.genai_review import run_review_from_patch
 st.set_page_config(page_title="LLVM GenAI PR Reviewer", layout="wide")
 st.title("🧠 LLVM PR Review (Clang + GenAI)")
 
-pr_number = st.number_input("Enter LLVM PR Number", min_value=1, step=1)
+pr_number = st.number_input("Enter LLVM PR Number", min_value=144629, step=1)
 repo = st.text_input("GitHub Repo (e.g., llvm/llvm-project)", value="llvm/llvm-project")
 commit_sha = st.text_input("Commit SHA (from PR)", placeholder="e.g., abcdef1234567890")
 
