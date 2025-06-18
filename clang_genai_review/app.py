@@ -21,7 +21,7 @@ if run:
         st.error("❌ Please provide the commit SHA.")
         st.stop()
 
-    review_file = os.path.join(REVIEW_DIR, f"llvm_pr_{pr_number}_review.md")
+    review_file = os.path.join(REVIEW_DIR, f"pr_{pr_number}.md")
 
     if os.path.exists(review_file):
         st.success(f"✅ Review for PR #{pr_number} already exists.")
@@ -54,7 +54,7 @@ if run:
                 st.stop()
 
 if pr_number:
-    review_file = os.path.join(REVIEW_DIR, f"llvm_pr_{pr_number}_review.md")
+    review_file = os.path.join(REVIEW_DIR, f"pr_{pr_number}.md")
 
     if os.path.exists(review_file):
         with st.expander("📋 Show AI Review"):
