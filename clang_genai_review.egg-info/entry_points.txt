@@ -1,2 +1,3 @@
 [console_scripts]
 clang-genai-review = clang_genai_review.cli:main
+
